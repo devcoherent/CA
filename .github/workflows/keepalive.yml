@@ -1,0 +1,31 @@
+name: Keep Supabase awake
+
+# Free Supabase projects pause after 7 days without activity.
+# This pings the database once a day so that never happens.
+on:
+  schedule:
+    - cron: '17 6 * * *' # every day at 06:17 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping the database through the REST API
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "Add SUPABASE_URL and SUPABASE_ANON_KEY as repository secrets." >&2
+            exit 1
+          fi
+          curl --fail --silent --show-error --retry 3 --retry-delay 10 \
+            -X POST "$SUPABASE_URL/rest/v1/rpc/keepalive" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+          echo
+          echo "Supabase is awake."
