@@ -119,12 +119,16 @@ export default function LoginPage() {
         )}
 
         <div className="mt-6 flex flex-col gap-2 border-t border-border pt-5 text-sm sm:flex-row sm:justify-between">
-          <p className="text-muted">
-            {copy.login.noAccount}{' '}
-            <Link className="link" to={`/signup?role=${role}`}>
-              {copy.login.createAccount}
-            </Link>
-          </p>
+          {view !== 'not_found' ? (
+            <p className="text-muted">
+              {copy.login.noAccount}{' '}
+              <Link className="link" to={`/signup?role=${role}`}>
+                {copy.login.createAccount}
+              </Link>
+            </p>
+          ) : (
+            <span />
+          )}
           <Link className="link" to={`/login?role=${other}`} onClick={() => savePortalRole(other)}>
             {role === 'client' ? copy.login.switchToTeam : copy.login.switchToClient}
           </Link>
