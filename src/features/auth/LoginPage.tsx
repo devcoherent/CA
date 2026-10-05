@@ -134,7 +134,8 @@ export default function LoginPage() {
           </Link>
         </div>
       </div>
-      {import.meta.env.DEV && <DevPasswordLogin initialEmail={email} />}
+      {/* Demo mode has its own user switcher, so the dev password form is not needed there. */}
+      {import.meta.env.DEV && !__DEMO__ && <DevPasswordLogin initialEmail={email} />}
     </AuthCard>
   )
 }

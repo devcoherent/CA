@@ -34,6 +34,9 @@ const ApprovalsPage = lazy(() => import('@/features/admin/ApprovalsPage'))
 const RequestsPage = lazy(() => import('@/features/admin/RequestsPage'))
 const TemplatesPage = lazy(() => import('@/features/admin/TemplatesPage'))
 const AuditPage = lazy(() => import('@/features/admin/AuditPage'))
+// Demo panel: only exists when __DEMO__ is true. In production __DEMO__ is the constant `false`,
+// so this import is removed from the bundle entirely.
+const DemoSwitcher = __DEMO__ ? lazy(() => import('@/demo/DemoSwitcher')) : null
 
 /** Saves theme changes to the profile, and applies the saved profile theme after login. */
 function ThemeBridge({ children }: { children: ReactNode }) {
@@ -139,6 +142,11 @@ export function App() {
         <ThemeBridge>
           <ToastProvider>
             <AppRoutes />
+            {DemoSwitcher && (
+              <Suspense fallback={null}>
+                <DemoSwitcher />
+              </Suspense>
+            )}
           </ToastProvider>
         </ThemeBridge>
       </AuthProvider>

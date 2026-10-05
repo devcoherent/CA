@@ -7,3 +7,6 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+/** True only in demo mode (dev server or `vite build --mode demo` with VITE_DEMO_MODE=true). Always false in production. */
+declare const __DEMO__: boolean

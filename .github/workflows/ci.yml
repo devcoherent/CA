@@ -28,6 +28,10 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+      - name: Production bundle has no demo code or fake data
+        run: npm run check:bundle
+      - name: Self-test the bundle check (a demo build must be detected)
+        run: npm run check:bundle:selftest
 
   database:
     name: Database tests (RLS, timers, kickoff, signup roles)
