@@ -5,12 +5,29 @@ import type { AuditEntry, Profile } from '@/lib/types'
 import { formatDateTime, toDateInput } from '@/lib/format'
 import { friendlyError } from '@/lib/errors'
 import { Badge, EmptyState, ErrorBox, LoadingList, PageHeader } from '@/components/ui'
+import { ACCESS_STEP_CONTENT } from '@/content/accessSteps'
+import type { AccessKey } from '@/lib/types'
 
 const ENTITY_LABEL: Record<string, string> = {
   access_steps: 'Access step',
   projects: 'Project',
   project_due_date_changes: 'Due date change',
   client_updates: 'Client update',
+}
+
+const ACTION_LABEL: Record<string, string> = { insert: 'Created', update: 'Changed', delete: 'Deleted' }
+
+/** Readable column names for the "changed:" summary. */
+const FIELD_LABEL: Record<string, string> = {
+  value_text: 'value', provided_by: 'entered by', due_date: 'due date', start_date: 'start date', require_admin_approval: 'approval setting',
+  kickoff_confirmed_at: 'kickoff', current_stage: 'stage', webvizio_url: 'Webvizio link', staging_url: 'staging link',
+}
+
+/** A human name for the changed thing: access step title, project name or update text. */
+function entityName(e: AuditEntry): string {
+  const d = (e.new_data ?? e.old_data ?? {}) as Record<string, unknown>
+  if (e.entity_type === 'access_steps' && typeof d.key === 'string') return ACCESS_STEP_CONTENT[d.key as AccessKey]?.title ?? d.key
+  return String(d.name ?? d.message ?? '')
 }
 
 function changedKeys(e: AuditEntry): string[] {
@@ -107,17 +124,17 @@ export default function AuditPage() {
         <ul className="card divide-y divide-border">
           {data.map((e) => {
             const keys = changedKeys(e)
-            const name = (e.new_data?.name ?? e.old_data?.name ?? e.new_data?.key ?? e.new_data?.message ?? '') as string
+            const name = entityName(e)
             return (
               <li key={e.id} className="px-4 py-3">
                 <details>
                   <summary className="flex cursor-pointer flex-wrap items-center gap-2 text-sm">
                     <span className="text-xs text-muted">{formatDateTime(e.created_at)}</span>
-                    <Badge tone={e.action === 'delete' ? 'danger' : e.action === 'insert' ? 'success' : 'neutral'}>{e.action}</Badge>
+                    <Badge tone={e.action === 'delete' ? 'danger' : e.action === 'insert' ? 'success' : 'neutral'}>{ACTION_LABEL[e.action] ?? e.action}</Badge>
                     <span className="font-medium">{ENTITY_LABEL[e.entity_type] ?? e.entity_type}</span>
                     {name && <span className="max-w-xs truncate text-muted">“{String(name)}”</span>}
                     <span className="text-muted">by {who(e.actor_id)}</span>
-                    {keys.length > 0 && <span className="text-xs text-muted">changed: {keys.join(', ')}</span>}
+                    {keys.length > 0 && <span className="text-xs text-muted">changed: {keys.map((k) => FIELD_LABEL[k] ?? k.replace(/_/g, ' ')).join(', ')}</span>}
                   </summary>
                   <div className="mt-3 grid gap-3 text-xs md:grid-cols-2">
                     {e.old_data && (

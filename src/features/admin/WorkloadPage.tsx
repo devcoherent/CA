@@ -174,9 +174,9 @@ export default function WorkloadPage() {
                     {stats.people.map((p) => (
                       <tr key={p.person?.id}>
                         <td className="px-4 py-3">{p.person?.full_name ?? p.person?.email}</td>
-                        <td className="px-4 py-3 text-right tabular-nums">{formatDuration(p.today)}</td>
-                        <td className="px-4 py-3 text-right tabular-nums">{formatDuration(p.week)}</td>
-                        <td className="px-4 py-3 text-right font-medium tabular-nums">{formatDuration(p.range)}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-right tabular-nums">{formatDuration(p.today)}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-right tabular-nums">{formatDuration(p.week)}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-right font-medium tabular-nums">{formatDuration(p.range)}</td>
                       </tr>
                     ))}
                     {stats.people.length === 0 && (
@@ -201,7 +201,7 @@ export default function WorkloadPage() {
                     <li key={p.name} className="px-4 py-3">
                       <div className="flex justify-between text-sm">
                         <span className="font-medium">{p.name}</span>
-                        <span className="tabular-nums">{formatDuration(p.range)}</span>
+                        <span className="whitespace-nowrap tabular-nums">{formatDuration(p.range)}</span>
                       </div>
                       <div className="mt-2 h-1.5 rounded-full bg-surface" aria-hidden="true">
                         <div className="h-full rounded-full bg-accent" style={{ width: `${(p.range / max) * 100}%` }} />
@@ -244,7 +244,7 @@ export default function WorkloadPage() {
                         <td className="px-4 py-3">{e.projects?.name}</td>
                         <td className="px-4 py-3">{formatDateTime(e.started_at)}</td>
                         <td className="px-4 py-3">{e.ended_at ? formatDateTime(e.ended_at) : <Badge tone="success">Running</Badge>}</td>
-                        <td className="px-4 py-3 text-right tabular-nums">
+                        <td className="px-4 py-3 whitespace-nowrap text-right tabular-nums">
                           {formatDuration(dur(e, now))}
                           {e.auto_stopped && (
                             <span className="ml-2">

@@ -53,16 +53,47 @@ immediately and a `pg_cron` job retries every 15 minutes.
 
 ## Preview (fastest way to see the app)
 
+### Demo mode: no Supabase, no Docker
+
 ```bash
 npm install
+npm run preview:demo      # opens http://localhost:5173 with fake data
+```
+
+A floating **Demo** button (bottom left) signs you in instantly as: Admin (Will), Team (Sadman), Team (Ashik),
+Client A (Acme Bakery), Client B (Northwind), a pending team user, or a new client with no organization. It also has a
+Light/Dark switch, "Sign out" and "Reset demo data". Your changes are kept in that browser tab until you reset or close it.
+
+- All demo data is fake: `@example.com` emails, made-up names and companies (`src/demo/data.ts`).
+- The mock (`src/demo/supabaseDemo.ts`) mirrors the database rules, so each role sees exactly what it would in production.
+- **It can never be on in production.** Demo mode needs `VITE_DEMO_MODE=true` *and* the dev server or an explicit
+  `vite build --mode demo`. `npm run build` compiles it out completely, and CI fails if any demo code or fake data
+  is found in the production bundle (`npm run check:bundle`, with a self-test that proves the check works).
+
+### Screenshots of every screen
+
+```bash
+npm run screenshots:install   # once: downloads Chromium for Playwright
+npm run screenshots           # starts its own demo server, takes 136 screenshots, opens preview/index.html
+```
+
+- Every main screen for every role, in light and dark, desktop (1440×900) and mobile (390×844), saved as
+  `preview/screenshots/{role}-{screen}-{theme}-{device}.png`.
+- `preview/index.html` groups them by role with a light/dark and desktop/mobile filter and a plain-English caption under
+  each screen. It opens automatically (`open` on Mac, `xdg-open` on Linux, `start` on Windows).
+- Re-shoot only part of it: `npm run screenshots -- --only=client-access` (matches the file name). Skip auto-open: `-- --no-open`.
+- Each run also checks every shot for sideways scrolling, clipped content, the right fonts (DM Sans headings, Inter body)
+  and page errors, and prints anything it finds (details in `preview/report.json`).
+- `preview/` is git-ignored: screenshots are never committed.
+
+### Real local backend
+
+```bash
 npm run preview:local     # needs Docker. Starts local Supabase, loads the seed data, serves http://localhost:5173
-npm run preview:gallery   # in a second terminal: screenshots of every main screen → open preview/index.html
 ```
 
 `preview:local` writes `.env.development.local` with the local keys (it never touches `.env.local`) and prints the
-test logins. `preview:gallery` logs in as each seeded user, captures every main screen in light and dark (plus phone
-width) and builds a clickable gallery in `preview/` (git-ignored). It needs Chromium for Playwright
-(`npx playwright install chromium` once, or set `CHROMIUM_PATH`).
+test logins (password `Password123!`, "Developer login" on `/login`).
 
 ## Local development
 
@@ -303,6 +334,8 @@ as admin, create a test project from a template, and walk through the **TEST CHE
 | --- | --- |
 | Brand colors, radius, button shape, fonts (whole app) | `src/styles/brand.ts` (**every value is marked `TODO(brand)`**) |
 | Logo | `src/assets/logo.svg` and `public/favicon.svg` |
+| Demo data (fake people, projects, statuses) | `src/demo/data.ts` |
+| Screens and captions in the screenshot preview | `scripts/screenshots.ts` (`SCREENS` list) |
 | All wording (landing, login, signup, client screens, errors) | `src/content/copy.ts` |
 | Support email, access email, marketing link | top of `src/content/copy.ts` |
 | Access step instructions and fields | `src/content/accessSteps.ts` |

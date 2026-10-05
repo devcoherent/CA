@@ -27,6 +27,8 @@ export interface WorkspaceData {
   stages: Stage[]
   tasks: Task[]
   members: Member[]
+  /** Everyone who appears on this page (members plus note authors such as admins), for showing names. */
+  people: Member[]
   updates: ClientUpdate[]
   notes: InternalNote[]
   steps: AccessStep[]
@@ -56,13 +58,20 @@ export default function ProjectWorkspace() {
     ])
     const p = unwrap(project) as Project | null
     if (!p) return null
+    const memberList = ((unwrap(members) as unknown as { profiles: Member | null }[]) ?? []).map((m) => m.profiles).filter((m): m is Member => Boolean(m))
+    const noteList = unwrap(notes) as InternalNote[]
+    const missing = [...new Set(noteList.map((n) => n.author_id).filter((a): a is string => Boolean(a) && !memberList.some((m) => m.id === a)))]
+    const extra = missing.length
+      ? ((unwrap(await supabase.from('profiles').select('id, full_name, email, avatar_url, role').in('id', missing)) as Member[]) ?? [])
+      : []
     return {
       project: p,
       stages: unwrap(stages) as Stage[],
       tasks: unwrap(tasks) as Task[],
-      members: ((unwrap(members) as unknown as { profiles: Member | null }[]) ?? []).map((m) => m.profiles).filter((m): m is Member => Boolean(m)),
+      members: memberList,
+      people: [...memberList, ...extra],
       updates: unwrap(updates) as ClientUpdate[],
-      notes: unwrap(notes) as InternalNote[],
+      notes: noteList,
       steps: unwrap(steps) as AccessStep[],
     }
   }, [id])

@@ -11,7 +11,7 @@ export function NotesTab({ data, reload }: { data: WorkspaceData; reload: () => 
   const [body, setBody] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const author = (id: string | null) => data.members.find((m) => m.id === id)
+  const author = (id: string | null) => data.people.find((m) => m.id === id)
 
   const add = async (e: FormEvent) => {
     e.preventDefault()

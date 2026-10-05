@@ -7,6 +7,8 @@ import { friendlyError } from '@/lib/errors'
 import { EmptyState, ErrorBox, LoadingList, PageHeader } from '@/components/ui'
 import { Icon } from '@/components/Icon'
 
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`
+
 type Row = Organization & { projects: { count: number }[]; profiles: { count: number }[] }
 
 export default function OrgsPage() {
@@ -58,7 +60,7 @@ export default function OrgsPage() {
                 <span className="min-w-0 flex-1">
                   <span className="block font-medium">{o.name}</span>
                   <span className="block text-sm text-muted">
-                    {o.projects?.[0]?.count ?? 0} projects · {o.profiles?.[0]?.count ?? 0} client users
+                    {plural(o.projects?.[0]?.count ?? 0, 'project')} · {plural(o.profiles?.[0]?.count ?? 0, 'client user')}
                   </span>
                 </span>
                 <Icon name="arrowRight" size={16} className="text-muted" />

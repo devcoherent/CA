@@ -39,7 +39,7 @@ cat <<MSG
     Admin   will@coherent.test        Team  sadman@coherent.test / ashik@coherent.test
     Client  maya@acmebakery.test      Client leo@northwind.test
   Magic-link emails: http://127.0.0.1:54324  (Mailpit)
-  Screenshot gallery (in another terminal): npm run preview:gallery
+  Screenshots of every screen (no backend needed): npm run screenshots
 
 MSG
 exec npx vite --port 5173 --host localhost --strictPort

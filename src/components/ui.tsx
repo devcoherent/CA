@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon, type IconName } from './Icon'
 import { initials } from '@/lib/format'
@@ -119,8 +119,13 @@ export function Avatar({ name, url, size = 32 }: { name?: string | null; url?: s
 }
 
 export function Tabs<T extends string>({ tabs, value, onChange, label }: { tabs: { id: T; label: string; count?: number }[]; value: T; onChange: (id: T) => void; label: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  // On phones the tab row scrolls sideways: keep the selected tab visible.
+  useEffect(() => {
+    ref.current?.querySelector('[aria-selected="true"]')?.scrollIntoView?.({ block: 'nearest', inline: 'center' })
+  }, [value])
   return (
-    <div role="tablist" aria-label={label} className="-mx-4 mb-6 flex gap-1 overflow-x-auto border-b border-border px-4 sm:mx-0 sm:px-0">
+    <div ref={ref} role="tablist" aria-label={label} className="-mx-4 mb-6 flex gap-1 overflow-x-auto border-b border-border px-4 sm:mx-0 sm:px-0">
       {tabs.map((t) => (
         <button
           key={t.id}

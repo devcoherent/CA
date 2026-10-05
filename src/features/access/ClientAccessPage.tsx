@@ -91,32 +91,32 @@ export default function ClientAccessPage() {
       {/* Progress indicator */}
       <nav aria-label="Access steps" className="mb-6">
         <p className="mb-3 text-sm text-muted">{onReview ? 'Review' : `Step ${index + 1} of ${steps.length}`}</p>
-        <ol className="grid grid-cols-3 gap-2 sm:grid-cols-7">
+        <ol className="grid grid-cols-4 gap-2 sm:grid-cols-7">
           {steps.map((s, i) => (
-            <li key={s.id}>
+            <li key={s.id} className="min-w-0">
               <button
                 type="button"
                 onClick={() => goTo(i)}
                 aria-current={i === index ? 'step' : undefined}
-                className={`flex w-full flex-col gap-1.5 rounded-field border p-2 text-left text-xs transition ${i === index ? 'border-accent bg-surface' : 'border-border hover:bg-surface'}`}
+                className={`flex h-full w-full flex-col gap-1.5 rounded-field border p-2 text-left text-xs transition ${i === index ? 'border-accent bg-surface' : 'border-border hover:bg-surface'}`}
               >
                 <span className={`h-1.5 w-full rounded-full ${s.status === 'pending' ? 'bg-border' : s.status === 'verified' ? 'bg-success' : 'bg-accent'}`} aria-hidden="true" />
-                <span className="truncate font-medium" title={ACCESS_STEP_CONTENT[s.key].title}>
+                <span className="font-medium leading-tight [overflow-wrap:anywhere]" title={ACCESS_STEP_CONTENT[s.key].title}>
                   {ACCESS_STEP_CONTENT[s.key].nav}
                 </span>
                 <span className="sr-only">: {s.status}</span>
               </button>
             </li>
           ))}
-          <li>
+          <li className="min-w-0">
             <button
               type="button"
               onClick={() => goTo(steps.length)}
               aria-current={onReview ? 'step' : undefined}
-              className={`flex w-full flex-col gap-1.5 rounded-field border p-2 text-left text-xs transition ${onReview ? 'border-accent bg-surface' : 'border-border hover:bg-surface'}`}
+              className={`flex h-full w-full flex-col gap-1.5 rounded-field border p-2 text-left text-xs transition ${onReview ? 'border-accent bg-surface' : 'border-border hover:bg-surface'}`}
             >
               <span className={`h-1.5 w-full rounded-full ${project.kickoff_confirmed_at ? 'bg-success' : 'bg-border'}`} aria-hidden="true" />
-              <span className="truncate font-medium">{copy.access.review}</span>
+              <span className="font-medium leading-tight">{copy.access.review}</span>
             </button>
           </li>
         </ol>
@@ -232,6 +232,8 @@ function StepScreen({ step, onChange }: { step: AccessStep; onChange: (patch: Pa
           const v = fieldValue(f.name)
           const secret = looksLikeSecret(v)
           const formatOff = Boolean(v && f.pattern && !f.pattern.test(v.trim()))
+          // The "never share passwords" notice above already covers the general rule, so a hint shows only when useful.
+          const hint = secret ? copy.access.secretWarning : formatOff ? f.patternHint : f.help
           return (
             <div key={f.name}>
               <label htmlFor={id} className="label">
@@ -248,12 +250,14 @@ function StepScreen({ step, onChange }: { step: AccessStep; onChange: (patch: Pa
                 autoComplete="off"
                 spellCheck={false}
                 aria-invalid={secret}
-                aria-describedby={`${id}-hint`}
+                aria-describedby={hint ? `${id}-hint` : undefined}
                 onChange={(e) => setField(f.name, e.target.value)}
               />
-              <p id={`${id}-hint`} className={`mt-1 text-xs ${secret ? 'text-danger' : 'text-muted'}`}>
-                {secret ? copy.access.secretWarning : formatOff ? f.patternHint : (f.help ?? 'IDs and links only.')}
-              </p>
+              {hint && (
+                <p id={`${id}-hint`} className={`mt-1 text-xs ${secret ? 'text-danger' : 'text-muted'}`}>
+                  {hint}
+                </p>
+              )}
             </div>
           )
         })}
