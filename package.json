@@ -15,7 +15,9 @@
     "e2e:smoke": "node e2e/smoke.mjs",
     "e2e:flows": "node e2e/flows.mjs",
     "e2e:a11y": "node e2e/a11y.mjs",
-    "db:reset": "supabase db reset"
+    "db:reset": "supabase db reset",
+    "preview:local": "bash scripts/preview.sh",
+    "preview:gallery": "node scripts/preview-gallery.mjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

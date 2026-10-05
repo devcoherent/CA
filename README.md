@@ -13,6 +13,7 @@ Everything runs on free tiers: **Supabase** (Auth, Postgres, Storage, Realtime, 
 ## Contents
 
 1. [How it works (short)](#how-it-works-short)
+1. [Preview (fastest way to see the app)](#preview-fastest-way-to-see-the-app)
 2. [Local development](#local-development)
 3. [Test logins (local only)](#test-logins-local-only)
 4. [Testing](#testing)
@@ -49,6 +50,19 @@ then sent by the `send-email` Edge Function through Resend. A `pg_net` trigger w
 immediately and a `pg_cron` job retries every 15 minutes.
 
 ---
+
+## Preview (fastest way to see the app)
+
+```bash
+npm install
+npm run preview:local     # needs Docker. Starts local Supabase, loads the seed data, serves http://localhost:5173
+npm run preview:gallery   # in a second terminal: screenshots of every main screen → open preview/index.html
+```
+
+`preview:local` writes `.env.development.local` with the local keys (it never touches `.env.local`) and prints the
+test logins. `preview:gallery` logs in as each seeded user, captures every main screen in light and dark (plus phone
+width) and builds a clickable gallery in `preview/` (git-ignored). It needs Chromium for Playwright
+(`npx playwright install chromium` once, or set `CHROMIUM_PATH`).
 
 ## Local development
 

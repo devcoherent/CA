@@ -12,3 +12,4 @@ supabase/functions/.env
 test-results
 playwright-report
 e2e/screenshots
+preview/
