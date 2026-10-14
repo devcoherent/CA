@@ -13,9 +13,12 @@
 2. **Redirect error (2)**: `/blog-category/webflow` and `/post/building-a-brand-...-2023`. Both last crawled 2026-06-29. Fix: clean up the 301 list, publish, then Validate Fix.
    - Cleaned 301 list: fixed malformed target (missing `/`), leading space, 2 chains, 3 rules pointing at 404s; added `/blog/(.*)` → `/post/%1` and `/case-studies-tags/(.*)`, `/blog-category/(.*)` wildcards.
    - Schema URL fixed on the post `building-a-brand-...-2026` (CMS item `64a80bfadb6f0b019acb4e95`). Staged on 2026-10-14.
+3. **Excluded by noindex (1)**: `/contact-us`. The cause was Sitemap indexing turned OFF, which adds noindex. Sadman turned it ON on 2026-10-14 (verified via MCP). Utility-page check and Validate Fix were skipped by choice.
 
 ## Open findings
 - 43 of 45 blog posts have `schema-markup` URLs using `/blog/<slug>` instead of `/post/<slug>`.
 - Services schema uses `https://www.coherent.agency/...` (non-canonical host).
 - Some case-study bodies link to `coherent-agency.webflow.io` (staging domain).
 - Post `how-to-use-ai-generated-seo-website-layout` links to `/post/stop-using-lorem-ipsum`, which redirects.
+- Contact page footer script calls `preventDefault()` + `window.open(www.../thank-you)`. This may block the Webflow form submission and opens a popup. Not verified; better to use the form's Redirect URL setting.
+- `/blog-tags/*` template is published and indexable, so its pages may be thin or duplicate. Revisit with the Duplicate canonical report.
