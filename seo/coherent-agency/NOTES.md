@@ -16,10 +16,16 @@
 3. **Excluded by noindex (1)**: `/contact-us`. The cause was Sitemap indexing turned OFF, which adds noindex. Sadman turned it ON on 2026-10-14 (verified via MCP). Utility-page check and Validate Fix were skipped by choice.
 4. **Not found 404 (1)**: `/case-study/veptos` is a draft CMS item that was kept unpublished on purpose. Decision: 301 to `/webflow-portfolio` (added to the import CSV). Note: if it is published later, fix the `what-we-do` field (it holds the medical-research copy) and the staging links in the body first.
 
+5. **Duplicate, Google chose different canonical (12)**: from crawls made before 2026-08 while the global canonical was still www. The global canonical is now `https://coherent.agency`. Closed.
+
+## Cleanup done 2026-10-14 (staged, not published)
+- CMS URL cleanup across 75 items / 82 fields. Verified with a script: 0 leftover patterns, 0 mismatches, 0 unintended changes.
+  - Posts (43): schema `coherent.agency/blog/` → `/post/`. One post-body had 5 `/blog/` links, also fixed.
+  - Services (3): schema `www.coherent.agency` → `coherent.agency`.
+  - Case studies (29): `coherent-agency.webflow.io` links → relative; www links → non-www. 7 of these items are archived and 1 is a draft.
+- Contact page footer script: thank-you URL changed to non-www.
+
 ## Open findings
-- 43 of 45 blog posts have `schema-markup` URLs using `/blog/<slug>` instead of `/post/<slug>`.
-- Services schema uses `https://www.coherent.agency/...` (non-canonical host).
-- Some case-study bodies link to `coherent-agency.webflow.io` (staging domain).
-- Post `how-to-use-ai-generated-seo-website-layout` links to `/post/stop-using-lorem-ipsum`, which redirects.
-- Contact page footer script calls `preventDefault()` + `window.open(www.../thank-you)`. This may block the Webflow form submission and opens a popup. Not verified; better to use the form's Redirect URL setting.
-- `/blog-tags/*` template is published and indexable, so its pages may be thin or duplicate. Revisit with the Duplicate canonical report.
+- Contact page footer script uses `preventDefault()` + `window.open`. It may block the Webflow form submission. Not verified.
+- `/blog-tags/*` template is published and indexable, so its pages may be thin. Revisit.
+- Static pages (Designer content) were not scanned for www or staging links; the Data API cannot read Designer content.
