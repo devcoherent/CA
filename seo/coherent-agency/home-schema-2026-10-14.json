@@ -1,0 +1,172 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "LocalBusiness",
+        "ProfessionalService"
+      ],
+      "@id": "https://coherent.agency/#organization",
+      "name": "Coherent Agency",
+      "alternateName": "Coherent Webflow Agency Toronto",
+      "url": "https://coherent.agency",
+      "logo": "https://cdn.prod.website-files.com/626c2242e24b7000f6241060/6908dc8bde9abb038a21d1ea_CA%20Logo%20Light%20(1).svg",
+      "image": "https://cdn.prod.website-files.com/626c2242e24b7000f6241060/6908dc8bde9abb038a21d1ea_CA%20Logo%20Light%20(1).svg",
+      "description": "Certified Webflow agency in Toronto delivering high-converting web design, development, and SEO/AEO strategy for startups to $100M+ enterprises.",
+      "foundingLocation": "Toronto, Canada",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Toronto",
+        "addressRegion": "Ontario",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.6532,
+        "longitude": -79.3832
+      },
+      "email": "info@coherent.agency",
+      "areaServed": [
+        "Toronto",
+        "Canada",
+        "United States",
+        "Worldwide"
+      ],
+      "priceRange": "$$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/coherent-agency",
+        "https://www.upwork.com/freelancers/webflowtoronto",
+        "https://www.fiverr.com/freelancers/willfromtoronto",
+        "https://dribbble.com/coherent_agency"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Webflow Agency Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Webflow Design and Development",
+              "url": "https://coherent.agency/services/webflow-development"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Branding and UI/UX Design",
+              "url": "https://coherent.agency/services/branding-uiux-design"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "SEO and AEO Strategy",
+              "url": "https://coherent.agency/services/seo-aeo-strategy"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Startup Website Design",
+              "url": "https://coherent.agency/startup-website-design"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "SaaS Website Design",
+              "url": "https://coherent.agency/saas-website-design"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://coherent.agency/#website",
+      "url": "https://coherent.agency",
+      "name": "Coherent Agency",
+      "publisher": {
+        "@id": "https://coherent.agency/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://coherent.agency/#webpage",
+      "url": "https://coherent.agency",
+      "name": "Certified Webflow Agency Toronto | Web Design and Development",
+      "description": "Certified Webflow agency in Toronto. High-converting web design, development, and SEO/AEO strategy for startups to $100M+ enterprises. 60+ projects.",
+      "isPartOf": {
+        "@id": "https://coherent.agency/#website"
+      },
+      "about": {
+        "@id": "https://coherent.agency/#organization"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://coherent.agency"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does Coherent Agency do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Coherent Agency is a certified Webflow agency based in Toronto that provides web design, development, SEO, AEO strategy, branding, UI/UX design, and app development for startups to $100M+ enterprises."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does a Webflow website cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Webflow website design at Coherent Agency starts at $3,500 for a Launch package (5 pages), $7,000 for a Growth package (up to 10 pages), and $12,000 or more for an Enterprise package with unlimited pages and full brand identity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Coherent Agency a certified Webflow agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Coherent Agency is a certified Webflow agency based in Toronto, Canada. The team holds Webflow certifications and has delivered 60+ projects for clients across Toronto, Canada, the United States, and globally."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Coherent Agency offer SEO and AEO services?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Coherent Agency offers full SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization) services. These include technical audits, keyword research, schema markup, content strategy, and optimization for AI platforms like ChatGPT, Perplexity, and Gemini."
+          }
+        }
+      ]
+    }
+  ]
+}
