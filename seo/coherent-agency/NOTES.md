@@ -14,6 +14,7 @@
    - Cleaned 301 list: fixed malformed target (missing `/`), leading space, 2 chains, 3 rules pointing at 404s; added `/blog/(.*)` → `/post/%1` and `/case-studies-tags/(.*)`, `/blog-category/(.*)` wildcards.
    - Schema URL fixed on the post `building-a-brand-...-2026` (CMS item `64a80bfadb6f0b019acb4e95`). Staged on 2026-10-14.
 3. **Excluded by noindex (1)**: `/contact-us`. The cause was Sitemap indexing turned OFF, which adds noindex. Sadman turned it ON on 2026-10-14 (verified via MCP). Utility-page check and Validate Fix were skipped by choice.
+4. **Not found 404 (1)**: `/case-study/veptos` is a draft CMS item that was kept unpublished on purpose. Decision: 301 to `/webflow-portfolio` (added to the import CSV). Note: if it is published later, fix the `what-we-do` field (it holds the medical-research copy) and the staging links in the body first.
 
 ## Open findings
 - 43 of 45 blog posts have `schema-markup` URLs using `/blog/<slug>` instead of `/post/<slug>`.
